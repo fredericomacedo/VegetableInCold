@@ -1,0 +1,47 @@
+<p>vegetables-list works!</p>
+
+  
+  <h2>Vegetables In Coud</h2>
+  
+  <div class="container">
+    <h2>Vegetable List</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Ref Date</th>
+          <th>DGUID</th>
+          <th>Area Production Value</th>
+          <th>UOM</th>
+          <th>UOM ID</th>
+          <th>Scalar Factor</th>
+          <th>Scalar ID</th>
+          <th>Vector</th>
+          <th>Coordinate</th>
+          <th>Value</th>
+          <th>Status</th>
+          <th>Symbol</th>
+          <th>Terminated</th>
+          <th>Decimals</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vegetable of vegetablesList">
+          <td>{{ vegetable.RefDate }}</td>
+          <td>{{ vegetable.Dguid }}</td>
+          <td>{{ vegetable.AreaProductionValue }}</td>
+          <td>{{ vegetable.Uom }}</td>
+          <td>{{ vegetable.UomId }}</td>
+          <td>{{ vegetable.ScalarFactor }}</td>
+          <td>{{ vegetable.ScalarId }}</td>
+          <td>{{ vegetable.Vector }}</td>
+          <td>{{ vegetable.Coordinate }}</td>
+          <td>{{ vegetable.Value }}</td>
+          <td>{{ vegetable.Status }}</td>
+          <td>{{ vegetable.Symbol }}</td>
+          <td>{{ vegetable.Terminated }}</td>
+          <td>{{ vegetable.Decimals }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
