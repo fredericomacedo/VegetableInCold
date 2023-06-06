@@ -1,34 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { VegetablesInCold } from 'model/vegetable-in-cold'; // Import your VegetablesInCold class
+import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
 
 @Component({
-  selector: 'app-vegetables-list',
-  templateUrl: './vegetables-list.component.html',
-  styleUrls: ['./vegetables-list.component.css']
+  selector: 'app-vegetables-controller',
+  templateUrl: '../view/vegetablesView.html',
+  styleUrls: ['../view/vegetables.component.css']
 })
-export class VegetablesListComponent implements OnInit {
+export class VegetableComponent implements OnInit {
   vegetablesList: VegetablesInCold[] = [];
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Initializes the component.
+   */
   ngOnInit() {
     this.fetchVegetablesData();
   }
 
+  /**
+   * Fetches vegetables data from the CSV file.
+   */
   fetchVegetablesData() {
-    const filePath = 'assets/data-source/data-source.csv'; // Update the file path to your CSV file
+    const filePath = 'assets/data-source/data-source.csv';
 
-    this.http.get(filePath, { responseType: 'text' }).subscribe(
-      (data: string) => {
-        this.parseCSVData(data);
-      },
-      (error) => {
-        console.log('An error occurred while fetching CSV data:', error);
-      }
-    );
+    this.http.get(filePath, { responseType: 'text' })
+      .pipe(
+        // Add any necessary operators here, such as map, filter, etc.
+      )
+      .subscribe(
+        (data: string) => {
+          this.parseCSVData(data);
+        },
+        (error) => {
+          console.log('An error occurred while fetching CSV data:', error);
+        }
+      );
   }
 
+  /**
+   * Parses the CSV data and populates the vegetables list.
+   * @param csvData The CSV data to parse.
+   */
   parseCSVData(csvData: string) {
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
@@ -52,9 +66,7 @@ export class VegetablesListComponent implements OnInit {
       vegetable.Terminated = values[12];
       vegetable.Decimals = values[13];
 
-    this.vegetablesList.push(vegetable);
-
+      this.vegetablesList.push(vegetable);
     }
   }
 }
-

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-vegetables-detail',
-  templateUrl: './vegetables-detail.component.html',
-  styleUrls: ['./vegetables-detail.component.css']
+  templateUrl: '../view/vegetables-detail.component.html',
+  styleUrls: ['../view/vegetables-detail.component.css']
 })
 export class VegetablesDetailComponent {
 
