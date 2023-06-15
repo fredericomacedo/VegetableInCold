@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
 
@@ -8,8 +8,25 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
   styleUrls: ['../view/vegetables.component.css']
 })
 export class VegetableComponent implements OnInit {
+  @Output() vegetableSelected = new EventEmitter<
+  {
+    refDate: string;
+    dguid: string;
+    areaProductionValue: string;
+    uom: string;
+    uomId: string;
+    scalarFactor: string;
+    scalarId: string;
+    vector: string;
+    coordinate: string;
+    value: string;
+    status: string;
+    symbol: string;
+    terminated: string;
+    decimals: string;
+  }>();
   vegetablesList: VegetablesInCold[] = [];
-
+  
   constructor(private http: HttpClient) { }
 
   /**
@@ -68,5 +85,13 @@ export class VegetableComponent implements OnInit {
 
       this.vegetablesList.push(vegetable);
     }
+  }
+  /**
+   * Handle the click event and pass the selected vegetable to another component or perform any desired action
+   * @param vegetable 
+   */
+
+  onClickTable() {
+    this.vegetableSelected
   }
 }
