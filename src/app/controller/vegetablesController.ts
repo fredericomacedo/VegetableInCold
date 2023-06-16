@@ -91,7 +91,23 @@ export class VegetableComponent implements OnInit {
    * @param vegetable 
    */
 
-  onClickTable() {
-    this.vegetableSelected
+  onClickTable(vegetable: VegetablesInCold) {
+    const selectedVegetable = {
+      refDate: vegetable.RefDate,
+      dguid: vegetable.Dguid,
+      areaProductionValue: vegetable.AreaProductionValue,
+      uom: vegetable.Uom,
+      uomId: vegetable.UomId,
+      scalarFactor: vegetable.ScalarFactor,
+      scalarId: vegetable.ScalarId,
+      vector: vegetable.Vector,
+      coordinate: vegetable.Coordinate,
+      value: vegetable.Value,
+      status: vegetable.Status,
+      symbol: vegetable.Symbol,
+      terminated: vegetable.Terminated,
+      decimals: vegetable.Decimals
+    }; 
+    this.vegetableSelected.emit(selectedVegetable);
   }
 }

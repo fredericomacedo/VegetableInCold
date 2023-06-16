@@ -14,16 +14,15 @@
           <li><a href="#">Delete Vegetable</a></li>
         </ul>
       </div>
+
+      
     </div>
+    
   </div>
+  
   <div class="row">
     <div class="col-xs-12">
-      DGUID
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      Area Production Value
+      <p>{{selectedVegetable?.RefDate}}</p>
     </div>
   </div>
   <div class="row">
@@ -46,4 +45,47 @@
       Scalar ID
     </div>
   </div>
+  <br>
+  <h2>Add New Inventory</h2>
+  <button class="btn btn-primary" (click)="onAddInventory()">
+    Add Inventory
+  </button>
+
+  <div class="row">
+    <div class="col-xs-12">
+      
+      <label>Ref Date: </label>
+        <input type="text" class="form-control" [(ngModel)]="newRefDate">
+        <label>DGUID: </label>
+        <input type="text" class="form-control" [(ngModel)]="newDguid">
+        <label>Area Production Value: </label>
+        <input type="text" class="form-control" [(ngModel)]="newAreaProductionValue">
+        <label>UOM: </label>
+        <input type="text" class="form-control" [(ngModel)]="newUom">
+        <label>UOM ID: </label>
+        <input type="text" class="form-control" [(ngModel)]="newUomId">
+        <label>Scalar Factor: </label>
+        <input type="text" class="form-control" [(ngModel)]="newScalarFactor">
+        <label>Scalar ID: </label>
+        <input type="text" class="form-control" [(ngModel)]="newScalarId">
+        <label>Vector: </label>
+        <input type="text" class="form-control" [(ngModel)]="newVector">
+        <label>Coordinate: </label>
+        <input type="text" class="form-control" [(ngModel)]="newCoordinate">
+        <label>Value: </label>
+        <input type="text" class="form-control" [(ngModel)]="newValue">
+        <label>Status: </label>
+        <input type="text" class="form-control" [(ngModel)]="newStatus">
+        <label>Symbol: </label>
+        <input type="text" class="form-control" [(ngModel)]="newSymbol">
+        <label>Terminated: </label>
+        <input type="text" class="form-control" [(ngModel)]="newTerminated">
+        <label>Decimals: </label>
+        <input type="text" class="form-control" [(ngModel)]="newDecimals">
+        <br>
+        
+      
+    </div>
+  </div>
+  
   

@@ -5,9 +5,9 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12 text-center">
+  <div class="col-md-12 text-center">
     <a href="#" class="list-group-item clearfix" *ngFor="let vegetable of vegetablesList; let i = index"
-    [ngClass]="{ 'table-yellow-row': i % 2 === 0, '': i % 2 !== 0 }">
+    [ngClass]="{ 'table-yellow-row': i % 2 === 0, '': i % 2 !== 0 }" (click)="onClickTable(vegetable)" >
       <table class="table table-striped">
         <thead>
           <tr>
@@ -28,7 +28,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr (click)="onClickTable(vegetable)">
+          <tr >
             <td>{{ vegetable.RefDate }}</td>
             <td>{{ vegetable.Dguid }}</td>
             <td>{{ vegetable.AreaProductionValue }}</td>
@@ -48,7 +48,7 @@
       </table>
     </a>
   </div>
-
+  
 </div>
 
 
