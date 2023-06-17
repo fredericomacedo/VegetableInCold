@@ -8,7 +8,12 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
   styleUrls: ['../view/vegetables.component.css']
 })
 export class VegetableComponent implements OnInit {
-  @Output() vegetableSelected = new EventEmitter<
+  @Output() vegetableSelected = new EventEmitter<VegetablesInCold>();
+
+  vegetableItem: VegetablesInCold = new VegetablesInCold();
+
+  
+  /*@Output() vegetableSelected = new EventEmitter<
   {
     refDate: string;
     dguid: string;
@@ -25,6 +30,39 @@ export class VegetableComponent implements OnInit {
     terminated: string;
     decimals: string;
   }>();
+
+    vegetableItem: {
+    refDate: string;
+    dguid: string;
+    areaProductionValue: string;
+    uom: string;
+    uomId: string;
+    scalarFactor: string;
+    scalarId: string;
+    vector: string;
+    coordinate: string;
+    value: string;
+    status: string;
+    symbol: string;
+    terminated: string;
+    decimals: string;
+  } = {
+    refDate: '',
+    dguid: '',
+    areaProductionValue: '',
+    uom: '',
+    uomId: '',
+    scalarFactor: '',
+    scalarId: '',
+    vector: '',
+    coordinate: '',
+    value: '',
+    status: '',
+    symbol: '',
+    terminated: '',
+    decimals: '',
+  };*/
+  
   vegetablesList: VegetablesInCold[] = [];
   
   constructor(private http: HttpClient) { }
@@ -64,7 +102,7 @@ export class VegetableComponent implements OnInit {
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
 
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 1; i <= 100; i++) {
       const values = lines[i].split(',');
 
       const vegetable: VegetablesInCold = new VegetablesInCold();
@@ -92,22 +130,11 @@ export class VegetableComponent implements OnInit {
    */
 
   onClickTable(vegetable: VegetablesInCold) {
-    const selectedVegetable = {
-      refDate: vegetable.RefDate,
-      dguid: vegetable.Dguid,
-      areaProductionValue: vegetable.AreaProductionValue,
-      uom: vegetable.Uom,
-      uomId: vegetable.UomId,
-      scalarFactor: vegetable.ScalarFactor,
-      scalarId: vegetable.ScalarId,
-      vector: vegetable.Vector,
-      coordinate: vegetable.Coordinate,
-      value: vegetable.Value,
-      status: vegetable.Status,
-      symbol: vegetable.Symbol,
-      terminated: vegetable.Terminated,
-      decimals: vegetable.Decimals
-    }; 
-    this.vegetableSelected.emit(selectedVegetable);
+    this.vegetableItem = vegetable;
+    this.vegetableSelected.emit(this.vegetableItem);
+    
+  
+    this.vegetableSelected.emit(this.vegetableItem);
   }
+  
 }

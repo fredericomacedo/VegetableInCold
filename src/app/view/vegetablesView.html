@@ -1,70 +1,37 @@
-
 <div class="row">
   <div class="col-xs-12">
     <button class="btn-success">New Vegetable</button>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12 text-center">
-    <a href="#" class="list-group-item clearfix" *ngFor="let vegetable of vegetablesList; let i = index"
-    [ngClass]="{ 'table-yellow-row': i % 2 === 0, '': i % 2 !== 0 }" (click)="onClickTable(vegetable)" >
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Ref Date</th>
-            <th>DGUID</th>
-            <th>Area Production Value</th>
-            <th>UOM</th>
-          <!-- <th>UOM ID</th>
-            <th>Scalar Factor</th>
-            <th>Scalar ID</th>
-            <th>Vector</th>
-            <th>Coordinate</th>
-            <th>Value</th>
-            <th>Status</th>
-            <th>Symbol</th>
-            <th>Terminated</th>
-            <th>Decimals</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td>{{ vegetable.RefDate }}</td>
-            <td>{{ vegetable.Dguid }}</td>
-            <td>{{ vegetable.AreaProductionValue }}</td>
-            <td>{{ vegetable.Uom }}</td>
-          <!-- <td>{{ vegetable.UomId }}</td>
-            <td>{{ vegetable.ScalarFactor }}</td>
-            <td>{{ vegetable.ScalarId }}</td>
-            <td>{{ vegetable.Vector }}</td>
-            <td>{{ vegetable.Coordinate }}</td>
-            <td>{{ vegetable.Value }}</td>
-            <td>{{ vegetable.Status }}</td>
-            <td>{{ vegetable.Symbol }}</td>
-            <td>{{ vegetable.Terminated }}</td>
-            <td>{{ vegetable.Decimals }}</td> -->
-          </tr>
-        </tbody>
-      </table>
-    </a>
+  <div class="col-md-5 text-center">
+    <div class="scrollable-content-parent">
+      <a href="#" class="list-group-item clearfix" *ngFor="let vegetable of vegetablesList; let i = index"
+        [ngClass]="{ 'table-yellow-row': i % 2 === 0, '': i % 2 !== 0 }" (click)="onClickTable(vegetable)">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Ref Date</th>
+              <th>DGUID</th>
+              <th>Area Production Value</th>
+              <th>UOM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ vegetable.RefDate }}</td>
+              <td>{{ vegetable.Dguid }}</td>
+              <td>{{ vegetable.AreaProductionValue }}</td>
+              <td>{{ vegetable.Uom }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </a>
+    </div>
   </div>
-  
+  <div class="col-md-7">
+    <app-vegetables-detail [selectedVegetable]="vegetableItem"></app-vegetables-detail>
+  </div>
 </div>
-
-
-             <!--  <td>{{ vegetable.RefDate }}</td>
-                <td>{{ vegetable.Dguid }}</td>
-                <td>{{ vegetable.AreaProductionValue }}</td>
-                <td>{{ vegetable.Uom }}</td>
-               <td>{{ vegetable.UomId }}</td>
-                <td>{{ vegetable.ScalarFactor }}</td>
-                <td>{{ vegetable.ScalarId }}</td>
-                <td>{{ vegetable.Vector }}</td>
-                <td>{{ vegetable.Coordinate }}</td>
-                <td>{{ vegetable.Value }}</td>
-                <td>{{ vegetable.Status }}</td>
-                <td>{{ vegetable.Symbol }}</td>
-                <td>{{ vegetable.Terminated }}</td>
-                <td>{{ vegetable.Decimals }}</td> -->
-            
-  
