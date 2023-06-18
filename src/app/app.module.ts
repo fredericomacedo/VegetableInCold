@@ -8,6 +8,8 @@ import { VegetablesDetailComponent } from './controller/vegetables-detail.compon
 import { HeaderComponent } from './controller/header.component';
 import { VegetableComponent } from './controller/vegetablesController';
 import { FormsModule } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent,
