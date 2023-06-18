@@ -7,30 +7,46 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
   templateUrl: '../view/vegetablesView.html',
   styleUrls: ['../view/vegetables.component.css']
 })
+/**
+ * Class VegetablesController to interact with view and model app 
+ */
 export class VegetableComponent implements OnInit {
   @Output() vegetableSelected = new EventEmitter<VegetablesInCold>();
-
+/**
+ * 
+ */
   vegetableItem: VegetablesInCold = new VegetablesInCold();
   vegetablesList: VegetablesInCold[] = [];
   vegetableCreated: VegetablesInCold = new VegetablesInCold();
-  constructor(private http: HttpClient, private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private http: HttpClient) { }
 
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.fetchVegetablesData();
+    this.fetchVegetablesData('assets/data-source/data-source.csv');
+  }
+  loadSavedFile(){
+    this.vegetablesList = [];
+    this.fetchVegetablesData('assets/data-source/new-data-source.csv')
   }
 
-  fetchVegetablesData() {
-    const filePath = 'assets/data-source/data-source.csv';
+  onDeleteVegetable(index: number) {
+    this.vegetablesList.splice(index, 1); // Remove the vegetable at the specified index
+  }
+  
+  
+
+  fetchVegetablesData(filePath: string) {
+    console.log(filePath);
   
     this.http.get(filePath, { responseType: 'text' })
       .subscribe(
         (data: string) => {
           const parsedData = this.parseCSVData(data);
           this.populateVegetablesList(parsedData);
+          
         },
         (error) => {
           console.log('An error occurred while fetching CSV data:', error);
@@ -79,7 +95,9 @@ export class VegetableComponent implements OnInit {
       vegetable.Decimals = row._15;
   
       this.vegetablesList.push(vegetable);
+      
     }
+    console.log(this.vegetablesList[0]);
   }
 
   /**
@@ -95,64 +113,38 @@ export class VegetableComponent implements OnInit {
    * @param newInventory 
    */
   onInventoryAdded(newInventory: VegetablesInCold = new VegetablesInCold()) {
-    const csvRow = {
-      _0: newInventory.RefDate,
-      _1: newInventory.Geo,
-      _2: newInventory.Dguid,
-      _3: newInventory.TypeOfProduct,
-      _4: newInventory.TypeOfStorage,
-      _5: newInventory.Uom,
-      _6: newInventory.UomId,
-      _7: newInventory.ScalarFactor,
-      _8: newInventory.ScalarId,
-      _9: newInventory.Vector,
-      _10: newInventory.Coordinate,
-      _11: newInventory.Value,
-      _12: newInventory.Status,
-      _13: newInventory.Symbol,
-      _14: newInventory.Terminated,
-      _15: newInventory.RefDate,
-      _16: newInventory.Decimals
-    };
-  
-    console.log(csvRow);
-    this.vegetablesList.push(newInventory);
-    this.addRowToCSV(csvRow);
-    };
-
-   
-  /**
-   * Add a row to the CSV file via the server API
-   * @param newRow The new row to be added
-   */
-  addRowToCSV(newRow: { [_: string]: string } = {}) {
-    const apiUrl = 'http://localhost:3000/api/csv';
-
-    this.http.post(apiUrl, newRow)
-      .subscribe(
-        () => {
-          console.log('Row added successfully!');
-          //this.vegetablesList.push(newRow); // Add the new row to the local data
-          this.changeDetectorRef.detectChanges(); // Trigger change detection to update the table
-        },
-        (error) => {
-          console.log('An error occurred while adding the row:', error);
-        }
-      );
-  }
-
-  /**
-   * Example function to demonstrate adding a row
-   * This can be called when you want to add a new row from your application
-   * You can modify this function as per your requirements and call it accordingly
-   
-  exampleAddRow() {
-    const newRow: VegetablesInCold = new VegetablesInCold();
-    newRow.RefDate = '2023-05-25';
-    newRow.Geo = 'Sample Geo';
-    newRow.Dguid = 'Sample Dguid';
-    // Assign values to other properties of the newRow object
     
-    this.addRowToCSV(newRow);
-  }*/
+  
+    this.vegetablesList.unshift(newInventory);
+    console.log(this.vegetablesList);
+    
+    //this.addRowToCSV(csvRow);
+    };
+
+  
+
+
+   /**
+    * 
+    * @param vegetablesList 
+    */
+    onClickSave() {
+      const apiEndpoint = 'http://localhost:3000/api/csv';
+      const jsonVegetablesList = JSON.stringify(this.vegetablesList);
+      this.http.post(apiEndpoint, this.vegetablesList)
+        .subscribe(
+          () => {
+            console.log('Vegetables list saved as CSV successfully');
+            // Handle success
+          },
+          (error) => {
+            console.log('An error occurred while saving vegetables list:', error);
+            // Handle error
+          }
+        );
+    }
+  
+    
+    
+  
 }

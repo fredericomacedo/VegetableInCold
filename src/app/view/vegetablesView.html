@@ -1,8 +1,14 @@
 <div class="row">
   <div class="col-xs-12">
-    <button class="btn-success">New Vegetable</button>
+    <div class="col-xs-1"> 
+      <button class="btn btn-success" (click)="onClickSave()">Save</button>
+    </div>
+    <div class="col-xs-1"> 
+      <button class="btn btn-success" (click)="loadSavedFile()">Load Last Saved File</button>
+    </div>
   </div>
 </div>
+
 <div class="row">
   <div class="col-md-5 text-center">
     <div class="scrollable-content-parent">
@@ -16,6 +22,7 @@
               <th>DGUID</th>
               <th>Area Production Value</th>
               <th>UOM</th>
+              <th>Delete</th> <!-- Add delete column header -->
             </tr>
           </thead>
           <tbody>
@@ -25,11 +32,19 @@
               <td>{{ vegetable.Dguid }}</td>
               <td>{{ vegetable.TypeOfProduct }}</td>
               <td>{{ vegetable.Uom }}</td>
+              <td>
+                <button class="btn btn-danger btn-xs" (click)="onDeleteVegetable(i)">Delete</button> <!-- Add delete button for each vegetable -->
+              </td>
             </tr>
           </tbody>
         </table>
       </a>
     </div>
+
+    
+      <app-vegetable-edit></app-vegetable-edit>
+    
+
   </div>
   <div class="col-md-7">
     <app-vegetables-detail (inventoryCreated)="onInventoryAdded($event)" [selectedVegetable]="vegetableItem"></app-vegetables-detail>

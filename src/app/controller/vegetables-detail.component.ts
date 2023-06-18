@@ -60,7 +60,7 @@ export class VegetablesDetailComponent implements OnInit {
   
     this.inventoryCreated.emit(newInventory);
   }
-  
+   
   
   
   
