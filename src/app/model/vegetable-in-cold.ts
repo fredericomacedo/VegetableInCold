@@ -1,7 +1,9 @@
 export class VegetablesInCold {
     private refDate: string;
+    private geo: string;
     private dguid: string;
-    private areaProductionValue: string;
+    private typeOfProduct: string;
+    private typeOfStorage: string;
     private uom: string;
     private uomId: string;
     private scalarFactor: string;
@@ -16,8 +18,10 @@ export class VegetablesInCold {
   
     constructor() {
         this.refDate = "";
+        this.geo = "";
         this.dguid = "";
-        this.areaProductionValue = "";
+        this.typeOfProduct = "";
+        this.typeOfStorage = "";
         this.uom = "";
         this.uomId = "";
         this.scalarFactor = "";
@@ -37,7 +41,12 @@ export class VegetablesInCold {
     public set RefDate(value: string) {
       this.refDate = value;
     }
-  
+    public get Geo(): string {
+      return this.geo;
+    }
+    public set Geo(value: string) {
+      this.geo = value;
+    }
     public get Dguid(): string {
       return this.dguid;
     }
@@ -45,13 +54,19 @@ export class VegetablesInCold {
       this.dguid = value;
     }
   
-    public get AreaProductionValue(): string {
-      return this.areaProductionValue;
+    public get TypeOfProduct(): string {
+      return this.typeOfProduct;
     }
-    public set AreaProductionValue(value: string) {
-      this.areaProductionValue = value;
+    public set TypeOfProduct(value: string) {
+      this.typeOfProduct= value;
     }
-  
+    
+    public get TypeOfStorage(): string {
+      return this.typeOfStorage;
+    }
+    public set TypeOfStorage(value: string) {
+      this.typeOfStorage= value;
+    }
     public get Uom(): string {
       return this.uom;
     }

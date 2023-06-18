@@ -9,29 +9,15 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
 export class VegetablesDetailComponent implements OnInit {
   @Input() selectedVegetable: VegetablesInCold | null = null;
 
-  @Output() inventoryCreated  = new EventEmitter<{
-    refDate: string,
-    dguid: string,
-    areaProductionValue: string,
-    uom: string,
-    uomId: string,
-    scalarFactor: string,
-    scalarId: string,
-    vector: string,
-    coordinate: string,
-    value: string,
-    status: string,
-    symbol: string,
-    terminated: string,
-    decimals: string                           
-                                  
-  }>();
+  @Output() inventoryCreated  = new EventEmitter<VegetablesInCold>();
 
   
 
   newRefDate = '';
+  newGeo = '';
   newDguid= '';
-  newAreaProductionValue = '';
+  newTypeOfProduct = '';
+  newTypeOfStorage = '';
   newUom = '';
   newUomId = '';
   newScalarFactor = '';
@@ -50,28 +36,36 @@ export class VegetablesDetailComponent implements OnInit {
 
   }
 
-
+  /**
+   * 
+   */
   onAddInventory() {
-    this.inventoryCreated.emit({
-      refDate: this.newRefDate,
-      dguid: this.newDguid,
-      areaProductionValue: this.newAreaProductionValue,
-      uom: this.newUom,
-      uomId: this.newUomId,
-      scalarFactor: this.newScalarFactor,
-      scalarId: this.newScalarId,
-      vector: this.newVector,
-      coordinate: this.newCoordinate,
-      value: this.newValue,
-      status: this.newStatus,
-      symbol: this.newSymbol,
-      terminated: this.newTerminated,
-      decimals: this.newDecimals
-
-
-    });
-
+    const newInventory: VegetablesInCold = new VegetablesInCold();
+    newInventory.RefDate = this.newRefDate;
+    newInventory.Geo = this.newGeo;
+    newInventory.Dguid = this.newDguid;
+    newInventory.TypeOfProduct = this.newTypeOfProduct;
+    newInventory.TypeOfStorage = this.newTypeOfStorage;
+    newInventory.Uom = this.newUom;
+    newInventory.UomId = this.newUomId;
+    newInventory.ScalarFactor = this.newScalarFactor;
+    newInventory.ScalarId = this.newScalarId;
+    newInventory.Vector = this.newVector;
+    newInventory.Coordinate = this.newCoordinate;
+    newInventory.Value = this.newValue;
+    newInventory.Status = this.newStatus;
+    newInventory.Symbol = this.newSymbol;
+    newInventory.Terminated = this.newTerminated;
+    newInventory.Decimals = this.newDecimals;
+  
+    this.inventoryCreated.emit(newInventory);
   }
+  
+  
+  
+  
+  
+  
   ngOnInit(): void {
       
   }

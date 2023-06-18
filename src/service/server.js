@@ -25,7 +25,7 @@ app.get('/api/csv', (req, res) => {
     });
 });
 
-// API endpoint to add a row to the CSV file
+/// API endpoint to add a row to the CSV file
 app.post('/api/csv', (req, res) => {
   const newRow = req.body;
   const filePath = 'src/assets/data-source/data-source.csv';
@@ -33,7 +33,7 @@ app.post('/api/csv', (req, res) => {
 
   parseCSVData(csvData)
     .then((rows) => {
-      rows.push(newRow);
+      rows.splice(1, 0, newRow); // Insert the new row after the header
       const updatedCSVData = convertToCSV(rows);
       fs.writeFileSync(filePath, updatedCSVData, 'utf-8');
       res.sendStatus(200);
@@ -135,8 +135,12 @@ function parseCSVData(csvData) {
 // Helper function to convert rows to CSV data
 function convertToCSV(rows) {
   const headers = Object.keys(rows[0]);
-  const csvData = [headers.join(',')];
+  const csvData = [];
 
+  // Add the headers to the CSV data
+  csvData.push(headers.join(','));
+
+  // Add the rows to the CSV data
   rows.forEach((row) => {
     const values = headers.map((header) => row[header]);
     csvData.push(values.join(','));
