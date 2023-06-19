@@ -1,5 +1,5 @@
 .scrollable-content-parent {
-    height: 400px; /* Set the desired height for the scrollable section */
+    height: 600px; /* Set the desired height for the scrollable section */
     overflow-y: scroll; /* Enable vertical scrolling */
   }
   

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-      <h1>Ref Date</h1>
+      <h2>Inventory Details</h2>
     </div>
   </div>
   <div class="row">
@@ -27,29 +27,32 @@
         
       </div>
       <div class="col-xs-3">
-        <p>DGID: {{selectedVegetable?.Dguid}}</p>
+        <p><strong>DGUID: </strong>{{selectedVegetable?.Dguid}}</p>
       </div>
       <div class="col-xs-3">
-        <p>AreaProductionValue: </p>
+        <p><strong>Type of Product: </strong>{{selectedVegetable?.TypeOfProduct}}</p>
       </div>
       <div class="col-xs-3">
-        <p>UOM: {{ selectedVegetable?.Uom }}</p>
+        <p><strong>Type of Storage: </strong>{{selectedVegetable?.TypeOfStorage}}</p>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="col-xs-3">
-        <p>UOM ID: {{ selectedVegetable?.UomId }}</p>
+        <p><p><strong>UOMID: </strong>{{ selectedVegetable?.UomId }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Scalar Factor: {{ selectedVegetable?.ScalarFactor }}</p>
+        <p><p><strong>UOM: </strong>{{ selectedVegetable?.Uom }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Scalar ID: {{ selectedVegetable?.ScalarId }}</p>
+        <p><strong>Scalar Factor: </strong> {{ selectedVegetable?.ScalarFactor }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Vector: {{ selectedVegetable?.Vector }}</p>
+        <p><strong>Scalar ID: </strong> {{ selectedVegetable?.ScalarId }}</p>
+      </div>
+      <div class="col-xs-3">
+        <p><strong>Vector: </strong>{{ selectedVegetable?.Vector }}</p>
       </div>
     </div>
   </div>
@@ -57,37 +60,39 @@
   <div class="row">
     <div class="col-xs-12">
       <div class="col-xs-3">
-        <p>Coordinate: {{ selectedVegetable?.Coordinate }}</p>
+        <p><strong>Cordinate: </strong> {{ selectedVegetable?.Coordinate }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Value: {{ selectedVegetable?.Value }}</p>
+        <p><strong>Value: </strong> {{ selectedVegetable?.Value }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Status: {{ selectedVegetable?.Status }}</p>
+        <p><strong>Status: </strong> {{ selectedVegetable?.Status }}</p>
       </div>
       <div class="col-xs-3">
-        <p>Symbol: {{ selectedVegetable?.Symbol }}</p>
+        <p><strong>Simbol: </strong> {{ selectedVegetable?.Symbol }}</p>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="col-xs-6">
-        <p>Terminated: {{ selectedVegetable?.Terminated }}</p>
+        <p><strong>Terminate: </strong> {{ selectedVegetable?.Terminated }}</p>
       </div>
       <div class="col-xs-6">
-      <p>Decimals: {{ selectedVegetable?.Decimals }}</p>
+      <p><strong>Deciamls: </strong> {{ selectedVegetable?.Decimals }}</p>
     </div>
     </div>
   </div>
   
   
   <br>
-  <h2>Add New Inventory</h2>
+  <h3>Add New/Edit Inventory</h3>
   <button class="btn btn-primary" (click)="onAddInventory()">
     Add Inventory
   </button>
-
+  <button class="btn btn-primary" >
+    Save changes
+  </button>
   <div class="row">
     <div class="col-xs-12">
       
@@ -95,7 +100,7 @@
         <input type="text" class="form-control" [(ngModel)]="newRefDate">
         <label>DGUID: </label>
         <input type="text" class="form-control" [(ngModel)]="newDguid">
-        <label>Area Production Value: </label>
+        <label>Type of Product: </label>
         <input type="text" class="form-control" [(ngModel)]="newTypeOfProduct">
         <label>UOM: </label>
         <input type="text" class="form-control" [(ngModel)]="newUom">

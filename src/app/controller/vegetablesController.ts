@@ -8,18 +8,31 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
   styleUrls: ['../view/vegetables.component.css']
 })
 /**
- * Class VegetablesController to interact with view and model app 
+ * Component to control the interaction between the view and the model for vegetables.
+ * by Frederico Lucio Macedo
  */
 export class VegetableComponent implements OnInit {
+  /**
+   * Event emitter for the selected vegetable.
+   */
   @Output() vegetableSelected = new EventEmitter<VegetablesInCold>();
-/**
- * 
- */
-  vegetableItem: VegetablesInCold = new VegetablesInCold();
-  vegetablesList: VegetablesInCold[] = [];
-  vegetableCreated: VegetablesInCold = new VegetablesInCold();
-  constructor(private http: HttpClient) { }
 
+  /**
+   * The selected vegetable item.
+   */
+  vegetableItem: VegetablesInCold = new VegetablesInCold();
+
+  /**
+   * The list of vegetables.
+   */
+  vegetablesList: VegetablesInCold[] = [];
+
+  /**
+   * The vegetable created.
+   */
+  vegetableCreated: VegetablesInCold = new VegetablesInCold();
+
+  constructor(private http: HttpClient) { }
 
   /**
    * Initializes the component.
@@ -27,53 +40,80 @@ export class VegetableComponent implements OnInit {
   ngOnInit() {
     this.fetchVegetablesData('assets/data-source/data-source.csv');
   }
-  loadSavedFile(){
+
+  /**
+   * Loads the saved file.
+   */
+  loadSavedFile() {
     this.vegetablesList = [];
-    this.fetchVegetablesData('assets/data-source/new-data-source.csv')
+    this.fetchVegetablesData('assets/data-source/new-data-source.csv');
   }
 
+  /**
+   * Deletes a vegetable from the list.
+   * @param index The index of the vegetable to delete.
+   */
   onDeleteVegetable(index: number) {
-    this.vegetablesList.splice(index, 1); // Remove the vegetable at the specified index
+    if (index !== null) {
+      this.vegetablesList.splice(index, 1); // Remove the vegetable at the specified index
+    }
+    else {
+      console.log('index null, no register was deleted')
+    }
   }
-  
-  
 
+  /**
+   * Fetches vegetables data from the specified file path.
+   * @param filePath The file path to fetch the data from.
+   */
   fetchVegetablesData(filePath: string) {
     console.log(filePath);
   
-    this.http.get(filePath, { responseType: 'text' })
-      .subscribe(
+    try {
+      this.http.get(filePath, { responseType: 'text' }).subscribe(
         (data: string) => {
           const parsedData = this.parseCSVData(data);
           this.populateVegetablesList(parsedData);
-          
         },
         (error) => {
           console.log('An error occurred while fetching CSV data:', error);
         }
       );
+    } catch (error) {
+      console.log('An error occurred while fetching CSV data:', error);
+    }
   }
   
+
+  /**
+   * Parses the CSV data and returns the parsed data.
+   * @param csvData The CSV data to parse.
+   * @returns The parsed data.
+   */
   parseCSVData(csvData: string) {
     const lines = csvData.split('\n');
     const headers = lines[0].split(',');
-  
+
     const parsedData = [];
-  
+
     for (let i = 1; i <= 100; i++) {
       const values = lines[i].split(',');
-  
+
       const row: { [key: string]: string } = {};
       for (let j = 0; j < headers.length; j++) {
         row[`_${j}`] = values[j];
       }
-  
+
       parsedData.push(row);
     }
-  
+
     return parsedData;
   }
-  
+
+  /**
+   * Populates the vegetables list with data.
+   * @param data The data to populate the vegetables list with.
+   */
   populateVegetablesList(data: any[]) {
     for (const row of data) {
       const vegetable: VegetablesInCold = new VegetablesInCold();
@@ -93,58 +133,46 @@ export class VegetableComponent implements OnInit {
       vegetable.Symbol = row._13;
       vegetable.Terminated = row._14;
       vegetable.Decimals = row._15;
-  
+
       this.vegetablesList.push(vegetable);
-      
     }
     console.log(this.vegetablesList[0]);
   }
 
   /**
-   * Handle the click event and pass the selected vegetable to another component or perform any desired action
-   * @param vegetable 
+   * Handles the click event on a table row and emits the selected vegetable.
+   * @param vegetable The selected vegetable.
    */
   onClickTable(vegetable: VegetablesInCold) {
     this.vegetableItem = vegetable;
     this.vegetableSelected.emit(this.vegetableItem);
   }
+
   /**
-   * 
-   * @param newInventory 
+   * Adds a new inventory item to the list.
+   * @param newInventory The new inventory item to add.
    */
   onInventoryAdded(newInventory: VegetablesInCold = new VegetablesInCold()) {
-    
-  
     this.vegetablesList.unshift(newInventory);
     console.log(this.vegetablesList);
-    
-    //this.addRowToCSV(csvRow);
-    };
+  }
 
-  
-
-
-   /**
-    * 
-    * @param vegetablesList 
-    */
-    onClickSave() {
-      const apiEndpoint = 'http://localhost:3000/api/csv';
-      const jsonVegetablesList = JSON.stringify(this.vegetablesList);
-      this.http.post(apiEndpoint, this.vegetablesList)
-        .subscribe(
-          () => {
-            console.log('Vegetables list saved as CSV successfully');
-            // Handle success
-          },
-          (error) => {
-            console.log('An error occurred while saving vegetables list:', error);
-            // Handle error
-          }
-        );
-    }
-  
-    
-    
-  
+  /**
+   * Saves the vegetables list.
+   */
+  onClickSave() {
+    const apiEndpoint = 'http://localhost:3000/api/csv';
+    const jsonVegetablesList = JSON.stringify(this.vegetablesList);
+    this.http.post(apiEndpoint, this.vegetablesList)
+      .subscribe(
+        () => {
+          console.log('Vegetables list saved as CSV successfully');
+          // Handle success
+        },
+        (error) => {
+          console.log('An error occurred while saving vegetables list:', error);
+          // Handle error
+        }
+      );
+  }
 }
