@@ -10,20 +10,7 @@ app.use(cors());
 // Middleware to parse JSON request body
 app.use(express.json());
 
-/** API endpoint to read the CSV file
-app.get('/api/csv', (req, res) => {
-  const filePath = 'src/assets/data-source/data-source.csv';
-  const csvData = fs.readFileSync(filePath, 'utf-8');
 
-  parseCSVData(csvData)
-    .then((rows) => {
-      res.json(rows);
-    })
-    .catch((error) => {
-      console.log('An error occurred while parsing CSV data:', error);
-      res.sendStatus(500);
-    });
-});*/
 
 /// API endpoint to save the vegetablesList as a new CSV file
 app.post('/api/csv', (req, res) => {

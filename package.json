@@ -23,6 +23,9 @@
     "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "fast-csv": "^4.3.6",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.4.0",
+    "promise": "^8.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

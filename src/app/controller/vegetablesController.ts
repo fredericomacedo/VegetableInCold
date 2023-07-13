@@ -47,6 +47,8 @@ export class VegetableComponent implements OnInit {
   loadSavedFile() {
     this.vegetablesList = [];
     this.fetchVegetablesData('assets/data-source/new-data-source.csv');
+
+    
   }
 
   /**
@@ -174,5 +176,6 @@ export class VegetableComponent implements OnInit {
           // Handle error
         }
       );
-  }
+
+      
 }
