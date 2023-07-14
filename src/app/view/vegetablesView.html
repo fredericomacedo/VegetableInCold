@@ -1,11 +1,12 @@
 <div class="row">
   <div class="col-xs-12">
-    <div class="col-xs-1"> 
+    <div class="col-xs-1">
       <button class="btn btn-success" (click)="onClickSave()">Save</button>
     </div>
-    <div class="col-xs-1"> 
+    <div class="col-xs-1">
       <button class="btn btn-success" (click)="loadSavedFile()">Load Last Saved File</button>
     </div>
+   
   </div>
 </div>
 
@@ -18,20 +19,26 @@
           <thead>
             <tr>
               <th>Index</th>
+              <th>Id</th>
               <th>Ref Date</th>
               <th>DGUID</th>
               <th>Area Production Value</th>
               <th>UOM</th>
+              <th>Edit</th> <!-- Add delete column header -->
               <th>Delete</th> <!-- Add delete column header -->
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>{{ i + 1 }}</td>
+              <td>{{ vegetable.Id }}</td>
               <td>{{ vegetable.RefDate }}</td>
               <td>{{ vegetable.Dguid }}</td>
               <td>{{ vegetable.TypeOfProduct }}</td>
               <td>{{ vegetable.Uom }}</td>
+              <td>
+                <button class="btn btn-danger btn-xs" (click)="onEditVegetable(i)">Edit</button> <!-- Add delete button for each vegetable -->
+              </td>
               <td>
                 <button class="btn btn-danger btn-xs" (click)="onDeleteVegetable(i)">Delete</button> <!-- Add delete button for each vegetable -->
               </td>
@@ -40,13 +47,9 @@
         </table>
       </a>
     </div>
-
-    
-      
-    
-
   </div>
   <div class="col-md-7">
-    <app-vegetables-detail (inventoryCreated)="onInventoryAdded($event)" [selectedVegetable]="vegetableItem"></app-vegetables-detail>
+    <app-vegetables-detail *ngIf="!editable && vegetableItem" (inventoryCreated)="onInventoryAdded($event)"
+      [selectedVegetable]="vegetableItem"></app-vegetables-detail>
   </div>
 </div>

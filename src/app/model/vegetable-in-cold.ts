@@ -1,4 +1,5 @@
 export class VegetablesInCold {
+    private id: string;
     private refDate: string;
     private geo: string;
     private dguid: string;
@@ -17,6 +18,7 @@ export class VegetablesInCold {
     private decimals: string;
   
     constructor() {
+        this.id = "";
         this.refDate = "";
         this.geo = "";
         this.dguid = "";
@@ -34,7 +36,13 @@ export class VegetablesInCold {
         this.terminated = "";
         this.decimals = "";
     }
-  
+    
+    public get Id(): string {
+       return this.id;
+    }
+    public set Id(value: string) {
+      this.id = value;
+    }
     public get RefDate(): string {
       return this.refDate;
     }

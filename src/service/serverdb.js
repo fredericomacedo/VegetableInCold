@@ -1,9 +1,12 @@
 const express = require('express');
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import the cors package
+
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors()); // Use the cors middleware
 // Create a connection pool to the MySQL database
 const pool = mysql.createPool({
   host: 'localhost',

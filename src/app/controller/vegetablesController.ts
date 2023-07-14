@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@ang
 import { HttpClient } from '@angular/common/http';
 import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
 
+
 @Component({
   selector: 'app-vegetables-controller',
   templateUrl: '../view/vegetablesView.html',
@@ -31,6 +32,10 @@ export class VegetableComponent implements OnInit {
    * The vegetable created.
    */
   vegetableCreated: VegetablesInCold = new VegetablesInCold();
+  /**
+   * Check if item is editable
+   */
+  editable = false;
 
   constructor(private http: HttpClient) { }
 
@@ -38,7 +43,7 @@ export class VegetableComponent implements OnInit {
    * Initializes the component.
    */
   ngOnInit() {
-    this.fetchVegetablesData('assets/data-source/data-source.csv');
+    this.fetchVegetablesData();
   }
 
   /**
@@ -46,7 +51,7 @@ export class VegetableComponent implements OnInit {
    */
   loadSavedFile() {
     this.vegetablesList = [];
-    this.fetchVegetablesData('assets/data-source/new-data-source.csv');
+    this.fetchVegetablesData();
 
     
   }
@@ -64,27 +69,42 @@ export class VegetableComponent implements OnInit {
     }
   }
 
+
+  onEditVegetable(index: number) {
+    if (index !== null) {
+      //this.vegetablesList.splice(index, 1); // Remove the vegetable at the specified index
+      this.editable = true
+    }
+    else {
+      console.log('index null, no register was deleted')
+    }
+  }
+
   /**
    * Fetches vegetables data from the specified file path.
    * @param filePath The file path to fetch the data from.
    */
-  fetchVegetablesData(filePath: string) {
-    console.log(filePath);
+  fetchVegetablesData() {
+    const apiUrl = 'http://localhost:3000/vegetables';
   
     try {
-      this.http.get(filePath, { responseType: 'text' }).subscribe(
-        (data: string) => {
-          const parsedData = this.parseCSVData(data);
-          this.populateVegetablesList(parsedData);
+      this.http.get<any[]>(apiUrl).subscribe({
+        next: (data: any[]) => {
+          this.populateVegetablesList(data);
+          console.log(data)
         },
-        (error) => {
-          console.log('An error occurred while fetching CSV data:', error);
+        error: (error) => {
+          console.log('An error occurred while fetching vegetable data:', error);
         }
-      );
+      });
     } catch (error) {
-      console.log('An error occurred while fetching CSV data:', error);
+      console.log('An error occurred while fetching vegetable data:', error);
     }
   }
+  
+  
+  
+  
   
 
   /**
@@ -119,28 +139,29 @@ export class VegetableComponent implements OnInit {
   populateVegetablesList(data: any[]) {
     for (const row of data) {
       const vegetable: VegetablesInCold = new VegetablesInCold();
-      vegetable.RefDate = row._0;
-      vegetable.Geo = row._1;
-      vegetable.Dguid = row._2;
-      vegetable.TypeOfProduct = row._3;
-      vegetable.TypeOfStorage = row._4;
-      vegetable.Uom = row._5;
-      vegetable.UomId = row._6;
-      vegetable.ScalarFactor = row._7;
-      vegetable.ScalarId = row._8;
-      vegetable.Vector = row._9;
-      vegetable.Coordinate = row._10;
-      vegetable.Value = row._11;
-      vegetable.Status = row._12;
-      vegetable.Symbol = row._13;
-      vegetable.Terminated = row._14;
-      vegetable.Decimals = row._15;
-
+      vegetable.Id = row.id.toString();
+      vegetable.RefDate = row.refDate;
+      vegetable.Geo = row.geo;
+      vegetable.Dguid = row.dguid;
+      vegetable.TypeOfProduct = row.typeOfProduct;
+      vegetable.TypeOfStorage = row.typeOfStorage;
+      vegetable.Uom = row.uom;
+      vegetable.UomId = row.uomId;
+      vegetable.ScalarFactor = row.scalarFactor;
+      vegetable.ScalarId = row.scalarId;
+      vegetable.Vector = row.vector;
+      vegetable.Coordinate = row.coordinate;
+      vegetable.Value = row.value;
+      vegetable.Status = row.status;
+      vegetable.Symbol = row.symbol;
+      vegetable.Terminated = row.isterminated;
+      vegetable.Decimals = row.decimals;
+  
       this.vegetablesList.push(vegetable);
     }
     console.log(this.vegetablesList[0]);
   }
-
+  
   /**
    * Handles the click event on a table row and emits the selected vegetable.
    * @param vegetable The selected vegetable.
@@ -148,6 +169,8 @@ export class VegetableComponent implements OnInit {
   onClickTable(vegetable: VegetablesInCold) {
     this.vegetableItem = vegetable;
     this.vegetableSelected.emit(this.vegetableItem);
+    
+
   }
 
   /**
@@ -155,9 +178,20 @@ export class VegetableComponent implements OnInit {
    * @param newInventory The new inventory item to add.
    */
   onInventoryAdded(newInventory: VegetablesInCold = new VegetablesInCold()) {
-    this.vegetablesList.unshift(newInventory);
-    console.log(this.vegetablesList);
+    const apiUrl = 'http://localhost:3000/vegetables';
+  
+    this.http.post(apiUrl, newInventory).subscribe(
+      () => {
+        // POST request successful, prepend the new inventory to the vegetablesList
+        this.vegetablesList.unshift(newInventory);
+        console.log(this.vegetablesList);
+      },
+      (error) => {
+        console.log('An error occurred while adding the inventory:', error);
+      }
+    );
   }
+  
 
   /**
    * Saves the vegetables list.
@@ -165,6 +199,7 @@ export class VegetableComponent implements OnInit {
   onClickSave() {
     const apiEndpoint = 'http://localhost:3000/api/csv';
     const jsonVegetablesList = JSON.stringify(this.vegetablesList);
+    this.editable = false;
     this.http.post(apiEndpoint, this.vegetablesList)
       .subscribe(
         () => {
@@ -176,6 +211,6 @@ export class VegetableComponent implements OnInit {
           // Handle error
         }
       );
-
+      }
       
 }
