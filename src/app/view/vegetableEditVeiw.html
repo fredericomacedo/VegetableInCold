@@ -1,1 +1,43 @@
-<h2>Edit Inventory</h2>
+<h3>Add New/Edit Inventory</h3>
+  <button class="btn btn-primary" (click)="onSubmitEdit()">
+    Add Inventory
+  </button>
+  <button class="btn btn-primary" >
+    Save changes
+  </button>
+  <div class="row">
+    <div class="col-xs-12">
+      
+        <label>Ref Date: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.RefDate">
+        <label>DGUID: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Dguid">
+        <label>Type of Product: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.TypeOfProduct">
+        <label>UOM: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Uom">
+        <label>UOM ID: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.UomId">
+        <label>Scalar Factor: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.ScalarFactor">
+        <label>Scalar ID: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.ScalarId">
+        <label>Vector: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Vector">
+        <label>Coordinate: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Coordinate">
+        <label>Value: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Value">
+        <label>Status: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Status">
+        <label>Symbol: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Symbol">
+        <label>Terminated: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Terminated">
+        <label>Decimals: </label>
+        <input type="text" class="form-control" [(ngModel)]="vegetable.Decimals">
+        <br>
+        
+      
+    </div>
+  </div>

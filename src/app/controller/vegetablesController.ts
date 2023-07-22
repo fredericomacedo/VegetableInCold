@@ -159,7 +159,7 @@ export class VegetableComponent implements OnInit {
   
       this.vegetablesList.push(vegetable);
     }
-    console.log(this.vegetablesList[0]);
+    console.log(this.vegetablesList);
   }
   
   /**

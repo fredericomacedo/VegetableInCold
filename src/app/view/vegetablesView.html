@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-5 text-center">
+  <div class="col-md-6 text-center">
     <div class="scrollable-content-parent">
       <a href="#" class="list-group-item clearfix" *ngFor="let vegetable of vegetablesList; let i = index"
         [ngClass]="{ 'table-yellow-row': i % 2 === 0, '': i % 2 !== 0 }" (click)="onClickTable(vegetable)">
@@ -48,7 +48,7 @@
       </a>
     </div>
   </div>
-  <div class="col-md-7">
+  <div class="col-md-6">
     <app-vegetables-detail *ngIf="!editable && vegetableItem" (inventoryCreated)="onInventoryAdded($event)"
       [selectedVegetable]="vegetableItem"></app-vegetables-detail>
   </div>
