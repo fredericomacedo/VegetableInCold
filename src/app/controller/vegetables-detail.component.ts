@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
-
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-vegetables-detail',
   templateUrl: '../view/vegetables-detail.component.html',
@@ -33,10 +33,10 @@ export class VegetablesDetailComponent implements OnInit {
   /**
    * Constructor for the component.
    */
-  constructor() {
+  constructor(private router: Router) {
     // 
   }
-
+  
   /**
    * Add a new inventory item based on the entered details and emit it to the parent component.
    */
@@ -61,8 +61,11 @@ export class VegetablesDetailComponent implements OnInit {
 
     this.inventoryCreated.emit(newInventory); // Emit the new inventory item to the parent component.
   }
-
+  onClickEdit() {
+    // Navigate to the VegetableEditComponent with the id of the selected vegetable
+    this.router.navigate(['/edit-vegetable', this.selectedVegetable?.Id]);
+  }
   ngOnInit(): void {
-    // Lifecycle hook that is called after the component is initialized.
+    
   }
 }

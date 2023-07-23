@@ -1,7 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
-
+import { VegetableService } from './vegetableService';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vegetables-controller',
@@ -12,7 +15,10 @@ import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
  * Component to control the interaction between the view and the model for vegetables.
  * by Frederico Lucio Macedo
  */
-export class VegetableComponent implements OnInit {
+export class VegetableComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject();
+  
+  public vegetables$!: Observable<VegetablesInCold[]>;
   /**
    * Event emitter for the selected vegetable.
    */
@@ -37,15 +43,25 @@ export class VegetableComponent implements OnInit {
    */
   editable = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private vegetableService: VegetableService) { }
 
   /**
    * Initializes the component.
    */
   ngOnInit() {
-    this.fetchVegetablesData();
+    this.vegetables$ = this.vegetableService.vegetables$;
+    console.log("variable vegetables", this.vegetables$);
+    this.populateVegetablesList();
+    //this.vegetableService.vegetables$.subscribe(vegetables => {
+      //this.vegetablesList = vegetables;
+    //});
+    //this.fetchVegetablesData();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
   /**
    * Loads the saved file.
    */
@@ -90,7 +106,7 @@ export class VegetableComponent implements OnInit {
     try {
       this.http.get<any[]>(apiUrl).subscribe({
         next: (data: any[]) => {
-          this.populateVegetablesList(data);
+          //this.populateVegetablesList(data);
           console.log(data)
         },
         error: (error) => {
@@ -136,7 +152,38 @@ export class VegetableComponent implements OnInit {
    * Populates the vegetables list with data.
    * @param data The data to populate the vegetables list with.
    */
-  populateVegetablesList(data: any[]) {
+
+  populateVegetablesList() {
+    this.vegetableService.vegetables$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(data => {
+        this.vegetablesList = []; // Clear the list first
+        for (const row of data) {
+          const vegetable: VegetablesInCold = new VegetablesInCold();
+          vegetable.Id = row.id;
+          vegetable.RefDate = row.refDate;
+          vegetable.Geo = row.geo;
+          vegetable.Dguid = row.dguid;
+          vegetable.TypeOfProduct = row.typeOfProduct;
+          vegetable.TypeOfStorage = row.typeOfStorage;
+          vegetable.Uom = row.uom;
+          vegetable.UomId = row.uomId;
+          vegetable.ScalarFactor = row.scalarFactor;
+          vegetable.ScalarId = row.scalarId;
+          vegetable.Vector = row.vector;
+          vegetable.Coordinate = row.coordinate;
+          vegetable.Value = row.value;
+          vegetable.Status = row.status;
+          vegetable.Symbol = row.symbol;
+          vegetable.Terminated = row.terminated;
+          vegetable.Decimals = row.decimals;
+          console.log("row in loop", row);
+          this.vegetablesList.push(vegetable);
+        }
+        console.log("vegetable list in populate", this.vegetablesList);
+      });
+  }
+  /*populateVegetablesList(data: any[]) {
     for (const row of data) {
       const vegetable: VegetablesInCold = new VegetablesInCold();
       vegetable.Id = row.id.toString();
@@ -160,7 +207,7 @@ export class VegetableComponent implements OnInit {
       this.vegetablesList.push(vegetable);
     }
     console.log(this.vegetablesList);
-  }
+  }*/
   
   /**
    * Handles the click event on a table row and emits the selected vegetable.
@@ -191,7 +238,9 @@ export class VegetableComponent implements OnInit {
       }
     );
   }
-  
+  onInventoryEdited(editedInventory: VegetablesInCold = new VegetablesInCold()){
+    
+  }
 
   /**
    * Saves the vegetables list.

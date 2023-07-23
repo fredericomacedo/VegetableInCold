@@ -8,21 +8,24 @@ import { VegetablesDetailComponent } from './controller/vegetables-detail.compon
 import { HeaderComponent } from './controller/header.component';
 import { VegetableComponent } from './controller/vegetablesController';
 import { FormsModule } from '@angular/forms';
-import { vegetableEdit } from './controller/vegetableEdit';
+import { VegetableEdit } from './controller/vegetableEdit';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     VegetablesDetailComponent,
     HeaderComponent,
-    vegetableEdit,
-    VegetableComponent
+    VegetableEdit,
+    VegetableComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
