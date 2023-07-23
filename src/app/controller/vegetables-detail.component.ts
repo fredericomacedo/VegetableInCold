@@ -65,6 +65,9 @@ export class VegetablesDetailComponent implements OnInit {
     // Navigate to the VegetableEditComponent with the id of the selected vegetable
     this.router.navigate(['/edit-vegetable', this.selectedVegetable?.Id]);
   }
+  onClickAdd(){
+    this.router.navigate(['/vegetables/add']);
+  }
   ngOnInit(): void {
     
   }

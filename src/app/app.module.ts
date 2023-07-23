@@ -10,7 +10,7 @@ import { VegetableComponent } from './controller/vegetablesController';
 import { FormsModule } from '@angular/forms';
 import { VegetableEdit } from './controller/vegetableEdit';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { VegetableAddComponent } from './controller/vegetableAddComponent';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     VegetableEdit,
     VegetableComponent,
+    VegetableAddComponent,
     
   ],
   imports: [

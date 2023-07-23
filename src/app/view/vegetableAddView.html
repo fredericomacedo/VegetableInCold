@@ -1,0 +1,81 @@
+<div class="add-vegetable container">
+  <h3>Add Vegetable</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmitAdd()" class="form-horizontal">
+
+    <div class="form-group">
+      <label for="refDate" class="control-label">Ref Date:</label>
+      <input id="refDate" type="text" formControlName="refDate" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="dguid" class="control-label">Dguid:</label>
+      <input id="dguid" type="text" formControlName="dguid" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="typeOfProduct" class="control-label">Type Of Product:</label>
+      <input id="typeOfProduct" type="text" formControlName="typeOfProduct" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="uom" class="control-label">Uom:</label>
+      <input id="uom" type="text" formControlName="uom" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="uomId" class="control-label">Uom Id:</label>
+      <input id="uomId" type="text" formControlName="uomId" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="scalarFactor" class="control-label">Scalar Factor:</label>
+      <input id="scalarFactor" type="text" formControlName="scalarFactor" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="scalarId" class="control-label">Scalar Id:</label>
+      <input id="scalarId" type="text" formControlName="scalarId" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="vector" class="control-label">Vector:</label>
+      <input id="vector" type="text" formControlName="vector" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="coordinate" class="control-label">Coordinate:</label>
+      <input id="coordinate" type="text" formControlName="coordinate" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="value" class="control-label">Value:</label>
+      <input id="value" type="text" formControlName="value" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="status" class="control-label">Status:</label>
+      <input id="status" type="text" formControlName="status" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="symbol" class="control-label">Symbol:</label>
+      <input id="symbol" type="text" formControlName="symbol" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="terminated" class="control-label">Terminated:</label>
+      <input id="terminated" type="text" formControlName="terminated" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="decimals" class="control-label">Decimals:</label>
+      <input id="decimals" type="text" formControlName="decimals" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Add Vegetable</button>
+    </div>
+
+  </form>
+</div>

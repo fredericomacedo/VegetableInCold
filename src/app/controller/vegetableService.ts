@@ -22,12 +22,15 @@ export class VegetableService {
     });
   }
 
-  createVegetable(newVegetable: VegetablesInCold) {
+  createVegetable(newVegetable: VegetablesInCold): Observable<VegetablesInCold> {
     const apiUrl = 'http://localhost:3000/vegetables';
-    this.http.post(apiUrl, newVegetable).subscribe(() => {
-      this._vegetables.next([...this._vegetables.getValue(), newVegetable]);
-    });
+    return this.http.post<VegetablesInCold>(apiUrl, newVegetable).pipe(
+      tap(() => {
+        this._vegetables.next([...this._vegetables.getValue(), newVegetable]);
+      })
+    );
   }
+  
 
   updateVegetable(updatedVegetable: VegetablesInCold): Observable<any> {
     console.log("id in service", updatedVegetable.id);

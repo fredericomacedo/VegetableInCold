@@ -72,6 +72,13 @@ export class VegetableComponent implements OnInit, OnDestroy {
     
   }
 
+  onClickRefresh(){
+    this.vegetables$ = this.vegetableService.vegetables$;
+    console.log("variable vegetables", this.vegetables$);
+    this.populateVegetablesList();
+  }
+
+
   /**
    * Deletes a vegetable from the list.
    * @param index The index of the vegetable to delete.
@@ -183,31 +190,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
         console.log("vegetable list in populate", this.vegetablesList);
       });
   }
-  /*populateVegetablesList(data: any[]) {
-    for (const row of data) {
-      const vegetable: VegetablesInCold = new VegetablesInCold();
-      vegetable.Id = row.id.toString();
-      vegetable.RefDate = row.refDate;
-      vegetable.Geo = row.geo;
-      vegetable.Dguid = row.dguid;
-      vegetable.TypeOfProduct = row.typeOfProduct;
-      vegetable.TypeOfStorage = row.typeOfStorage;
-      vegetable.Uom = row.uom;
-      vegetable.UomId = row.uomId;
-      vegetable.ScalarFactor = row.scalarFactor;
-      vegetable.ScalarId = row.scalarId;
-      vegetable.Vector = row.vector;
-      vegetable.Coordinate = row.coordinate;
-      vegetable.Value = row.value;
-      vegetable.Status = row.status;
-      vegetable.Symbol = row.symbol;
-      vegetable.Terminated = row.isterminated;
-      vegetable.Decimals = row.decimals;
   
-      this.vegetablesList.push(vegetable);
-    }
-    console.log(this.vegetablesList);
-  }*/
   
   /**
    * Handles the click event on a table row and emits the selected vegetable.

@@ -6,7 +6,7 @@
     <div class="col-xs-1">
       <button class="btn btn-success" (click)="loadSavedFile()">Load Last Saved File</button>
     </div>
-   
+    
   </div>
 </div>
 
@@ -24,7 +24,7 @@
               <th>DGUID</th>
               <th>Area Production Value</th>
               <th>UOM</th>
-              <th>Edit</th> <!-- Add delete column header -->
+              <!--<th>Edit</th>  Add delete column header -->
               <th>Delete</th> <!-- Add delete column header -->
             </tr>
           </thead>
@@ -37,7 +37,7 @@
               <td>{{ vegetable.TypeOfProduct }}</td>
               <td>{{ vegetable.Uom }}</td>
               <td>
-                <button class="btn btn-danger btn-xs" (click)="onEditVegetable(i)">Edit</button> <!-- Add delete button for each vegetable -->
+                <!--<button class="btn btn-danger btn-xs" (click)="onEditVegetable(i)">Edit</button>  Add delete button for each vegetable -->
               </td>
               <td>
                 <button class="btn btn-danger btn-xs" (click)="onDeleteVegetable(i)">Delete</button> <!-- Add delete button for each vegetable -->
