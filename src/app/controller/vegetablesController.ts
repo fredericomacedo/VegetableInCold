@@ -165,7 +165,9 @@ export class VegetableComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(data => {
         this.vegetablesList = []; // Clear the list first
-        for (const row of data) {
+        // Slice the data to take only the first 100 records
+        const slicedData = data.slice(0, 100);
+        for (const row of slicedData) {
           const vegetable: VegetablesInCold = new VegetablesInCold();
           vegetable.Id = row.id;
           vegetable.RefDate = row.refDate;
@@ -187,9 +189,10 @@ export class VegetableComponent implements OnInit, OnDestroy {
           console.log("row in loop", row);
           this.vegetablesList.push(vegetable);
         }
-        console.log("vegetable list in populate", this.vegetablesList);
+        
       });
-  }
+}
+
   
   
   /**

@@ -1,0 +1,14 @@
+<div class="col-xs-12">
+    <div class="col-xs-6">
+        <button class="btn btn-info" (click)="toggleData('product')">Show by Product</button>
+    </div>
+    <div class="col-xs-6">
+        <button class="btn btn-info" (click)="toggleData('storage')">Show by Storage</button>
+    </div>
+</div>
+
+
+
+<div class="col-xs-12">
+  <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>    
+</div>

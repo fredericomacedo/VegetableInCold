@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component,  Input, OnInit } from '@angular/core';
 import { VegetablesInCold } from 'src/app/model/vegetable-in-cold';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-vegetables-detail',
   templateUrl: '../view/vegetables-detail.component.html',
@@ -10,10 +10,50 @@ import { ActivatedRoute, Router } from '@angular/router';
  * Component to display the details of a selected vegetable and allow adding new inventory.
  */
 export class VegetablesDetailComponent implements OnInit {
-  @Input() selectedVegetable: VegetablesInCold | null = null; // Input property to receive the selected vegetable from the parent component.
+  /**
+   * Input property to receive the selected vegetable from the parent component
+   * and show detail in this form
+   */ 
+  @Input() selectedVegetable: VegetablesInCold | null = null; 
 
-  @Output() inventoryCreated = new EventEmitter<VegetablesInCold>(); // Output property to emit the newly created inventory to the parent component.
+  
+  /**
+   * initialize a router to navigate between screens 
+   * @param router 
+   */
+  constructor(private router: Router) {
+    // 
+  }
+  
+  
+  
+  /**
+   * Navigate to the VegetableEditComponent with the id of the selected vegetable
+   */
+  onClickEdit() {
+    
+    this.router.navigate(['/edit-vegetable', this.selectedVegetable?.Id]);
+  }
+  /**
+   * Navigate to add vegetable using router passing the actual 
+   * vegetable inventory id to be fetch in the VegetableAdd.component
+   */
+  onClickAdd(){
+    this.router.navigate(['/vegetables/add']);
+  }
+  ngOnInit(): void {
+    
+  }
+}
 
+
+/**
+   * Add a new inventory item based on the entered details and emit it to the parent component.
+   * 
+   * 
+   * 
+    @Output() inventoryCreated = new EventEmitter<VegetablesInCold>(); 
+  // properties of vegetable
   newRefDate = '';
   newGeo = '';
   newDguid = '';
@@ -30,17 +70,8 @@ export class VegetablesDetailComponent implements OnInit {
   newSymbol = '';
   newTerminated = '';
   newDecimals = '';
-  /**
-   * Constructor for the component.
-   */
-  constructor(private router: Router) {
-    // 
-  }
-  
-  /**
-   * Add a new inventory item based on the entered details and emit it to the parent component.
-   */
-  onAddInventory() {
+
+    onAddInventory() {
     const newInventory: VegetablesInCold = new VegetablesInCold();
     newInventory.RefDate = this.newRefDate;
     newInventory.Geo = this.newGeo;
@@ -61,14 +92,4 @@ export class VegetablesDetailComponent implements OnInit {
 
     this.inventoryCreated.emit(newInventory); // Emit the new inventory item to the parent component.
   }
-  onClickEdit() {
-    // Navigate to the VegetableEditComponent with the id of the selected vegetable
-    this.router.navigate(['/edit-vegetable', this.selectedVegetable?.Id]);
-  }
-  onClickAdd(){
-    this.router.navigate(['/vegetables/add']);
-  }
-  ngOnInit(): void {
-    
-  }
-}
+   */

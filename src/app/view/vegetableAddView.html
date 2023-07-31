@@ -1,8 +1,10 @@
 <div class="add-vegetable container">
   <h3>Add Vegetable</h3>
-
+  
   <form [formGroup]="form" (ngSubmit)="onSubmitAdd()" class="form-horizontal">
-
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Add Inventory</button>
+    </div>
     <div class="form-group">
       <label for="refDate" class="control-label">Ref Date:</label>
       <input id="refDate" type="text" formControlName="refDate" class="form-control">
@@ -73,9 +75,7 @@
       <input id="decimals" type="text" formControlName="decimals" class="form-control">
     </div>
 
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary">Add Vegetable</button>
-    </div>
+    
 
   </form>
 </div>

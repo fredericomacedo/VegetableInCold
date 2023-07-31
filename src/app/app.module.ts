@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { VegetableEdit } from './controller/vegetableEdit';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VegetableAddComponent } from './controller/vegetableAddComponent';
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ChartComponent } from './chart/chart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +21,7 @@ import { VegetableAddComponent } from './controller/vegetableAddComponent';
     VegetableEdit,
     VegetableComponent,
     VegetableAddComponent,
+    ChartComponent
     
   ],
   imports: [
@@ -26,7 +29,8 @@ import { VegetableAddComponent } from './controller/vegetableAddComponent';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CanvasJSAngularChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

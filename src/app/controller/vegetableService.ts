@@ -11,17 +11,29 @@ export class VegetableService {
   constructor(private http: HttpClient) {
     this.getVegetables();
   }
+  /**
+   * Get inventory by id
+   * @param id 
+   * @returns 
+   */
   getVegetable(id: string): Observable<VegetablesInCold> {
     const apiUrl = `http://localhost:3000/vegetables/${id}`;
     return this.http.get<VegetablesInCold>(apiUrl);
   }
+  /**
+   * Get all inventory
+   */
   getVegetables() {
     const apiUrl = 'http://localhost:3000/vegetables';
     this.http.get<VegetablesInCold[]>(apiUrl).subscribe(vegetables => {
       this._vegetables.next(vegetables);
     });
   }
-
+  /**
+   * Create new inventory
+   * @param newVegetable 
+   * @returns 
+   */
   createVegetable(newVegetable: VegetablesInCold): Observable<VegetablesInCold> {
     const apiUrl = 'http://localhost:3000/vegetables';
     return this.http.post<VegetablesInCold>(apiUrl, newVegetable).pipe(
@@ -30,8 +42,11 @@ export class VegetableService {
       })
     );
   }
-  
-
+  /**
+   * Update inventory
+   * @param updatedVegetable 
+   * @returns 
+   */
   updateVegetable(updatedVegetable: VegetablesInCold): Observable<any> {
     console.log("id in service", updatedVegetable.id);
     const apiUrl = `http://localhost:3000/vegetables/${updatedVegetable.id}`;
@@ -42,8 +57,10 @@ export class VegetableService {
       this._vegetables.next(updatedVegetables);
     }));
   }
-  
-
+  /**
+   * Delete inventory by id
+   * @param id 
+   */
   deleteVegetable(id: number) {
     const apiUrl = `http://localhost:3000/vegetables/${id}`;
     this.http.delete(apiUrl).subscribe(() => {

@@ -1,4 +1,4 @@
-const csv = require('csv-parser');
+const csvtojson = require('csvtojson');
 const fs = require('fs');
 const mysql = require('mysql2');
 
@@ -10,47 +10,56 @@ const pool = mysql.createPool({
   database: 'vegetables',
 });
 
+let rowDataBatch = [];
+
 // Open the CSV file and read its contents
-fs.createReadStream(__dirname + '/data-source.csv')
-  .pipe(csv())
-  .on('data', (row) => {
-    // Map the CSV row data to the corresponding database columns
-    const rowData = [
-      row.REF_DATE,
-      row.GEO,
-      row.DGUID,
-      row.TypeOfProduct,
-      row.TypeOfStorage,
-      row.UOM,
-      row.UOM_ID,
-      row.SCALAR_FACTOR,
-      row.SCALAR_ID,
-      row.VECTOR,
-      row.COORDINATE,
-      row.VALUE,
-      row.STATUS,
-      row.SYMBOL,
-      row.TERMINATED,
-      row.DECIMALS,
-    ];
+csvtojson()
+  .fromFile(__dirname + '/data-source.csv')
+  .subscribe((jsonObj, lineNumber) => {
+    rowDataBatch.push([
+      jsonObj.REF_DATE,
+      jsonObj.GEO,
+      jsonObj.DGUID,
+      jsonObj.TypeOfProduct,
+      jsonObj.TypeOfStorage,
+      jsonObj.UOM,
+      jsonObj.UOM_ID,
+      jsonObj.SCALAR_FACTOR,
+      jsonObj.SCALAR_ID,
+      jsonObj.VECTOR,
+      jsonObj.COORDINATE,
+      jsonObj.VALUE,
+      jsonObj.STATUS,
+      jsonObj.SYMBOL,
+      jsonObj.TERMINATED,
+      jsonObj.DECIMALS,
+    ]);
 
-    // Construct the SQL query to insert the data into the MySQL table
-    const query = `
-      INSERT INTO Vegetables (refDate, geo, dguid, typeOfProduct, typeOfStorage, uom, uomId, scalarFactor, scalarId, vector, coordinate, value, status, symbol, isterminated, decimals)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
+    if (rowDataBatch.length === 30) {
+      let batch = [...rowDataBatch];
+      rowDataBatch = [];
 
-    // Execute the SQL query with the row data
-    pool.query(query, rowData, (error, results) => {
-      if (error) {
-        console.error('Error inserting row:', error);
-      }
-      
-    });
-    
+      return new Promise((resolve, reject) => {
+        const query = `
+          INSERT INTO Vegetables (refDate, geo, dguid, typeOfProduct, typeOfStorage, uom, uomId, scalarFactor, scalarId, vector, coordinate, value, status, symbol, isterminated, decimals)
+          VALUES ?
+        `;
+
+        pool.query(query, [batch], (error, results) => {
+          if (error) {
+            console.error('Error inserting row:', error);
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+      });
+    }
   })
-  .on('end', () => {
+  .then(() => {
     console.log('CSV file successfully imported into MySQL.');
-    // Close the connection pool
     pool.end();
+  })
+  .catch((error) => {
+    console.error('An error occurred:', error);
   });

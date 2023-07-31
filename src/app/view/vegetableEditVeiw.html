@@ -1,5 +1,12 @@
 <h3>Edit Inventory</h3>
+
 <form [formGroup]="form" (ngSubmit)="onSubmitEdit()">
+  <div>
+    <button class="btn btn-primary" type="submit">
+      Save changes
+    </button>
+  </div>
+  
   <label>Ref Date: </label>
   <input type="text" class="form-control" formControlName="refDate">
   <label>DGUID: </label>
@@ -31,7 +38,5 @@
   <!-- add more input fields here -->
   <br>
   
-  <button class="btn btn-primary" type="submit">
-    Save changes
-  </button>
+  
 </form>
