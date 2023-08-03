@@ -20,6 +20,7 @@ export class VegetableEdit implements OnInit {
       refDate: [''],
       dguid: [''],
       typeOfProduct: [''],
+      typeOfStorage: [''],
       uom: [''],
       uomId: [''],
       scalarFactor: [''],

@@ -1,0 +1,20 @@
+.logo-image {
+    width: 50px;
+    height: auto;
+    
+}
+.navbar-default {
+    min-height: 80px; /* You can adjust the height as per your requirement */
+    
+    background-color:steelblue;
+    font-size: large;
+    
+    
+}
+.navbar-default a, .navbar-brand {
+    color: white;
+}
+
+.navbar-default a:hover, .navbar-brand:hover {
+    color:black;
+}

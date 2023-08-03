@@ -23,7 +23,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
    * Event emitter for the selected vegetable.
    */
   @Output() vegetableSelected = new EventEmitter<VegetablesInCold>();
-
+  @Output() vegetablesEmitter = new EventEmitter<VegetablesInCold[]>();
   /**
    * The selected vegetable item.
    */
@@ -52,6 +52,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
     this.vegetables$ = this.vegetableService.vegetables$;
     console.log("variable vegetables", this.vegetables$);
     this.populateVegetablesList();
+    this.vegetablesEmitter.emit(this.vegetablesList);
     //this.vegetableService.vegetables$.subscribe(vegetables => {
       //this.vegetablesList = vegetables;
     //});
@@ -186,7 +187,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
           vegetable.Symbol = row.symbol;
           vegetable.Terminated = row.terminated;
           vegetable.Decimals = row.decimals;
-          console.log("row in loop", row);
+          
           this.vegetablesList.push(vegetable);
         }
         
@@ -202,7 +203,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
   onClickTable(vegetable: VegetablesInCold) {
     this.vegetableItem = vegetable;
     this.vegetableSelected.emit(this.vegetableItem);
-    
+    this.vegetablesEmitter.emit(this.vegetablesList);
 
   }
 
@@ -217,7 +218,7 @@ export class VegetableComponent implements OnInit, OnDestroy {
       () => {
         // POST request successful, prepend the new inventory to the vegetablesList
         this.vegetablesList.unshift(newInventory);
-        console.log(this.vegetablesList);
+        
       },
       (error) => {
         console.log('An error occurred while adding the inventory:', error);
@@ -228,24 +229,6 @@ export class VegetableComponent implements OnInit, OnDestroy {
     
   }
 
-  /**
-   * Saves the vegetables list.
-   */
-  onClickSave() {
-    const apiEndpoint = 'http://localhost:3000/api/csv';
-    const jsonVegetablesList = JSON.stringify(this.vegetablesList);
-    this.editable = false;
-    this.http.post(apiEndpoint, this.vegetablesList)
-      .subscribe(
-        () => {
-          console.log('Vegetables list saved as CSV successfully');
-          // Handle success
-        },
-        (error) => {
-          console.log('An error occurred while saving vegetables list:', error);
-          // Handle error
-        }
-      );
-      }
+  
       
 }

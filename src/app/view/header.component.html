@@ -4,13 +4,19 @@
             <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
               <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
             </button>
-            <a routerLink="/" class="navbar-brand">Vegetables Inventory </a>
-            <p>by Frederico Lucio Macedo</p>
-          </div>
+            <a routerLink="/" class="navbar-brand">
+                <img src="assets/cold-storage.png" class="logo-image"alt="Brand Logo">
+    
+            </a>
+           
+        </div>
+       
           <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
             <ul class="nav navbar-nav">
-                <li><a href="#">Vegetables List</a></li>
+                <li><a (click)="onClickSave()">Export to CSV file</a></li>
                 <li><a href="#">Vegetables Details</a></li>
+                <li><a hfre="#">The Developer</a></li>
+                <li><a hfre="#">About this project</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -21,6 +27,17 @@
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div>  
+        
     </div>
 </nav>
+<div class="row">
+    <div class="col-md-12">
+        <p>by Frederico Lucio Macedo</p>
+    </div>
+    <div class="col-md-12">
+        
+        <app-vegetables-controller (vegetablesEmitter)="receiveVegetablesList($event)"></app-vegetables-controller>
+
+    </div>  
+</div>    

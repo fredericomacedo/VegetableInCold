@@ -2,7 +2,8 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Import the cors package
-
+const fs = require('fs');
+const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(bodyParser.json());
@@ -145,6 +146,47 @@ app.delete('/vegetables/:id', async (req, res) => {
   }
   
 });
+
+
+app.post('/api/csv', async (req, res) => {
+  const vegetablesList = req.body;
+  const filePath = 'src/assets/data-source/new-data-source.csv';
+  const dirPath = 'src/assets/data-source/';
+  
+  if (!vegetablesList) {
+    res.status(400).json({ message: 'No data provided' });
+    return;
+  }
+
+  // create the directories if they do not exist
+  if (!fs.existsSync(dirPath)){
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+
+  // Convert vegetablesList to CSV content
+  if (vegetablesList.length === 0) {
+    res.status(204).send(); // No Content
+    return;
+  }
+
+  const headers = Object.keys(vegetablesList[0]);
+  const csvContent = [
+    headers.join(','),
+    ...vegetablesList.map((row) => headers.map((header) => row[header]).join(','))
+  ].join('\n');
+
+  // Write the CSV content to the file
+  try {
+    await fs.promises.writeFile(filePath, csvContent, 'utf-8');
+    res.status(200).send();
+  } catch (error) {
+    console.error('Error writing file:', error);
+    res.status(500).json({ message: 'Error writing to file' });
+  }
+});
+
+
+
 
 // Start the server
 app.listen(3000, () => {

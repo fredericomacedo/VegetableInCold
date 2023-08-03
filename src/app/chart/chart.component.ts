@@ -16,10 +16,13 @@ interface DataPoint {
 export class ChartComponent implements OnInit, OnDestroy {
   vegetablesList: VegetablesInCold[] = [];
   vegetablesSubscription!: Subscription;
-  currentType = 'product';
-
+  currentType = 'product'; // variable to store the typo of chart
+  
+  //Initial chart configurations 
   chartOptions = {
+    theme: "light2",
     title: {
+      
       text: "Vegetables in Cold Storage"
     },
     data: [{
@@ -28,8 +31,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     }]                
   };
 
+  //Constructor 
   constructor(private vegetableService: VegetableService, private cd: ChangeDetectorRef) {}
-
+  /**
+   * ngOnInit initialize vegetables from vegetable listener and render the chart
+   */
   ngOnInit() {
     this.vegetablesSubscription = this.vegetableService.vegetables$
       .subscribe((vegetables: VegetablesInCold[]) => {
@@ -38,20 +44,31 @@ export class ChartComponent implements OnInit, OnDestroy {
         this.updateChartData();
       });
   }
-  
+  /**
+   * A callback method that performs custom clean-up, 
+   * invoked immediately before a directive, pipe, 
+   * or service instance is destroyed.
+   */
   ngOnDestroy() {
     if (this.vegetablesSubscription) {
       this.vegetablesSubscription.unsubscribe();
     }
   }
-
+  /**
+   * To save user option to render the chart
+   * @param type product or storage type
+   */
   toggleData(type: string) {
     this.currentType = type;
     this.updateChartData();
     console.log("Current type in toggleData event ", this.currentType);
   }
   
-
+/**
+ * Aggregate values form vegetables list according the user option
+ * Sort chart on descending order
+ * Create new chart option
+ */
   updateChartData() {
     const dataPoints: DataPoint[] = [];
     const valueMap: { [key: string]: number } = {};
@@ -76,6 +93,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   
     // Create a new chartOptions object
     this.chartOptions = {
+      theme: this.chartOptions.theme,
       title: {
         text: "Vegetables in Cold Storage by " + (this.currentType === 'product' ? 'Product' : 'Storage')
       },
